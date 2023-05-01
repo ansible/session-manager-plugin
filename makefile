@@ -81,6 +81,14 @@ create-package-folder:
 	mkdir -p $(GO_SPACE)/bin/updates/ssmcli/`cat $(GO_SPACE)/VERSION`/
 	mkdir -p $(GO_SPACE)/bin/updates/sessionmanagerplugin/`cat $(GO_SPACE)/VERSION`/
 
+.PHONY: build-linux-noarch
+build-linux-noarch: checkstyle copy-src pre-build
+	@echo "Build for linux (native) platform"
+	$(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/linux_noarch_plugin/session-manager-plugin -v \
+		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
+	$(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/linux_noarch/ssmcli -v \
+    		$(GO_SPACE)/src/ssmcli-main/main.go
+
 .PHONY: build-linux-amd64
 build-linux-amd64: checkstyle copy-src pre-build
 	@echo "Build for linux platform"
